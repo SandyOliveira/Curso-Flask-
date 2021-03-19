@@ -33,10 +33,18 @@
         <h3 class="text-muted">Bird+</h3>
       </div>
 
-      {% block content %} {% endblock %}
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <div class="alert alert-warning">
+        <ul class="flashes">
+          {% for message in messages %}
+          <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %} {% endwith %} {% block content %} {% endblock %}
 
       <footer class="footer">
-        <p>&copy; 2016 Company, Inc.</p>
+        <p>&copy; 2021 Sandy Oliveira</p>
       </footer>
     </div>
     <!-- /container -->

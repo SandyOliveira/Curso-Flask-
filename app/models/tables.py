@@ -1,6 +1,9 @@
 from app import db
+from flask_login import UserMixin
+from app import lm
 
-class User(db.Model):
+
+class User(db.Model, UserMixin):
   __tablename__= "users"
 
   id = db.Column(db.Integer, primary_key=True)
@@ -8,6 +11,24 @@ class User(db.Model):
   password = db.Column(db.String)
   name = db.Column(db.String)
   email = db.Column(db.String, unique=True)
+
+
+  @lm.user_loader
+  def get_user(ident):
+    return User.query.get(int(ident))
+  @property
+  def is_authenticated(self):
+    return True
+
+  @property
+  def is_active(self):
+    return True
+
+  @property
+  def is_anonymous(self):
+    return False
+
+ 
 
   def __init__(self, username, password, name, email):
     self.username = username
